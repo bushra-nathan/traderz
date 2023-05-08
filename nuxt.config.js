@@ -1,7 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - traderz',
     title: 'traderz',
@@ -16,55 +15,57 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
-
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
-
-  // Auto import components: https://go.nuxtjs.dev/config-components
+  plugins: [
+    '@/plugins/filters.js',
+  ],
   components: true,
-
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/svg',
+    '@nuxtjs/composition-api/module',
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/moment',
   ],
-
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-  ],
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  modules: [ '@nuxtjs/axios', '@nuxtjs/auth-next', 'nuxt-svg-loader' ],
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
   },
-
-  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: true,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
+    customVariables: ['~/assets/scss/variables.scss'],
+    defaultAssets: {
+      font: {
+        family: 'Manrope',
+        size: 14,
       },
+      icons: 'fa',
+    },
+
+    treeShake: true,
+  },
+  build: {
+    postcss: null,
+  },
+  googleFonts: {
+    families: {
+      Manrope: true,
+    },
+    prefetch: true,
+    preconnect: true,
+    preload: true,
+    useStylesheet: true,
+  },
+  svgLoader: {
+    svgoConfig: {
+      plugins: [
+        { prefixIds: false }, // Disables prefixing for SVG IDs
+      ],
     },
   },
-
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  server: {
+    port: 5000, // default: 3000
+    host: 'localhost', // default: localhost,
+    timing: false,
+  },
 }
